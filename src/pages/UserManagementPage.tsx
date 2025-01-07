@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Navbar from "../components/Dashboard/Navbar";
 import UserTable from "../components/Dashboard/UserTable";
 import UserForm from "../components/Dashboard/UserForm";
-import Sidebar from "../components/Dashboard/Sidebar"; // Importamos el Sidebar
+import Sidebar from "../components/Dashboard/Sidebar";
 import { User } from "../types/user";
 
 const UserManagementPage: React.FC = () => {
@@ -12,6 +12,7 @@ const UserManagementPage: React.FC = () => {
   ]);
   const [editingUser, setEditingUser] = useState<User | null>(null);
   const [isFormVisible, setFormVisible] = useState(false);
+  const [isSidebarOpen, setSidebarOpen] = useState(false);
 
   const handleFormSubmit = (user: User | Omit<User, "id">) => {
     if ("id" in user) {
@@ -38,19 +39,46 @@ const UserManagementPage: React.FC = () => {
     setFormVisible(false);
   };
 
+  const handleToggleSidebar = () => {
+    setSidebarOpen(!isSidebarOpen);
+  };
+
   return (
     <div className="d-flex vh-100">
       {/* Sidebar */}
-      <div className="d-none d-md-block col-md-3 col-lg-2 bg-light border-end p-0">
+      <div
+        className={`col-12 col-md-3 col-lg-2 bg-light border-end p-0 position-fixed h-100 ${
+          isSidebarOpen ? "d-block" : "d-none d-md-block"
+        }`}
+        style={{ zIndex: 1050 }}
+      >
         <Sidebar />
       </div>
+
       {/* Main Content */}
-      <div className="col-12 col-md-9 col-lg-10">
+      <div className="col-12 col-md-9 col-lg-10 offset-md-3 offset-lg-2">
         <Navbar />
-        <div className="container mt-4">
-          <button className="btn btn-success mb-3" onClick={() => setFormVisible(true)}>
+
+        {/* Botón de menú (icono de hamburguesa), solo visible si el sidebar está cerrado */}
+        <div className="d-flex justify-content-between align-items-center mt-2">
+          {!isSidebarOpen && (
+            <button
+              className="btn btn-light d-md-none"
+              onClick={handleToggleSidebar}
+              style={{
+                fontSize: "1.5rem",
+                zIndex: 1100,
+              }}
+            >
+              <i className="fas fa-bars"></i> {/* Icono de menú (FontAwesome) */}
+            </button>
+          )}
+          <button className="btn btn-success" onClick={() => setFormVisible(true)}>
             Crear Usuario
           </button>
+        </div>
+
+        <div className="container mt-4">
           {isFormVisible && (
             <UserForm
               user={editingUser || undefined}

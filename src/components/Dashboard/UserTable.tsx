@@ -12,31 +12,31 @@ const UserTable: React.FC<UserTableProps> = ({ users, onEdit, onDelete }) => {
     <div
       className="table-responsive"
       style={{
-        border: "1px solid #E5E7EB", // Borde gris claro
+        border: "1px solid #E5E7EB",
         borderRadius: "10px",
         boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
-        overflow: "hidden",
+        overflowX: "auto",
       }}
     >
       <table
-        className="table table-hover align-middle"
+        className="table table-hover align-middle text-center"
         style={{
-          backgroundColor: "#FFFFFF", // Fondo blanco
+          backgroundColor: "#FFFFFF",
+          minWidth: "700px", // Ancho mínimo para que los datos se muestren correctamente
         }}
       >
         <thead
           style={{
-            backgroundColor: "#00aae4", // Gris oscuro suave
-            color: "#FFFFFF", // Texto blanco
-            textAlign: "center",
+            backgroundColor: "#00aae4",
+            color: "#FFFFFF",
           }}
         >
           <tr>
-            <th>Nombre</th>
-            <th>Email</th>
-            <th>Rol</th>
-            <th>Estado</th>
-            <th>Acciones</th>
+            <th style={{ verticalAlign: "middle" }}>Nombre</th>
+            <th style={{ verticalAlign: "middle" }}>Email</th>
+            <th style={{ verticalAlign: "middle" }}>Rol</th>
+            <th style={{ verticalAlign: "middle" }}>Estado</th>
+            <th style={{ verticalAlign: "middle" }}>Acciones</th>
           </tr>
         </thead>
         <tbody>
@@ -44,18 +44,18 @@ const UserTable: React.FC<UserTableProps> = ({ users, onEdit, onDelete }) => {
             <tr
               key={user.id}
               style={{
-                backgroundColor: index % 2 === 0 ? "#FFFFFF" : "#F5F5F5", // Alternancia entre blanco y gris claro
+                backgroundColor: index % 2 === 0 ? "#FFFFFF" : "#F5F5F5",
               }}
             >
-              <td>{user.name}</td>
-              <td>{user.email}</td>
-              <td>{user.role}</td>
-              <td className="text-center">
+              <td style={{ verticalAlign: "middle" }}>{user.name}</td>
+              <td style={{ verticalAlign: "middle" }}>{user.email}</td>
+              <td style={{ verticalAlign: "middle" }}>{user.role}</td>
+              <td style={{ verticalAlign: "middle" }}>
                 <span
-                  className={`badge`}
+                  className="badge"
                   style={{
-                    backgroundColor: user.active ? "#A3E635" : "#F87171", // Verde para activo, rojo para inactivo
-                    color: "#FFFFFF", // Texto blanco
+                    backgroundColor: user.active ? "#A3E635" : "#F87171",
+                    color: "#FFFFFF",
                     padding: "5px 10px",
                     borderRadius: "15px",
                     fontWeight: "bold",
@@ -64,33 +64,39 @@ const UserTable: React.FC<UserTableProps> = ({ users, onEdit, onDelete }) => {
                   {user.active ? "Activo" : "Inactivo"}
                 </span>
               </td>
-              <td className="text-center">
-                <button
-                  className="btn btn-link p-0 text-primary me-2"
-                  onClick={() => onEdit(user)}
-                  title="Editar"
-                >
-                  <i
-                    className="bi bi-pencil-square"
+              <td style={{ verticalAlign: "middle" }}>
+                <div className="d-flex justify-content-center gap-2">
+                  <button
+                    className="btn btn-sm btn-primary"
+                    onClick={() => onEdit(user)}
+                    title="Editar"
                     style={{
-                      fontSize: "1.2rem",
-                      color: "#2563EB", // Azul profesional
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      width: "36px",
+                      height: "36px",
+                      borderRadius: "50%",
                     }}
-                  ></i>
-                </button>
-                <button
-                  className="btn btn-link p-0 text-danger"
-                  onClick={() => onDelete(user.id)}
-                  title="Eliminar"
-                >
-                  <i
-                    className="bi bi-trash"
+                  >
+                    <i className="bi bi-pencil-square" style={{ fontSize: "1.2rem" }}></i>
+                  </button>
+                  <button
+                    className="btn btn-sm btn-danger"
+                    onClick={() => onDelete(user.id)}
+                    title="Eliminar"
                     style={{
-                      fontSize: "1.2rem",
-                      color: "#DC2626", // Rojo profesional
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      width: "36px",
+                      height: "36px",
+                      borderRadius: "50%",
                     }}
-                  ></i>
-                </button>
+                  >
+                    <i className="bi bi-trash" style={{ fontSize: "1.2rem" }}></i>
+                  </button>
+                </div>
               </td>
             </tr>
           ))}

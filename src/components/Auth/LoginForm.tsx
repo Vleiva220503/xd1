@@ -4,9 +4,11 @@ import { useNavigate } from "react-router-dom";
 const LoginForm: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [alert, setAlert] = useState<{ type: string; message: string } | null>(null);
+  const [alert, setAlert] = useState<{ type: string; message: string } | null>(
+    null
+  );
 
-  const navigate = useNavigate(); // Hook para redirigir al usuario
+  const navigate = useNavigate();
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -16,11 +18,9 @@ const LoginForm: React.FC = () => {
         type: "success",
         message: "¡Inicio de sesión exitoso! Redirigiendo...",
       });
-
-      // Redirigir al dashboard después de un breve retraso
       setTimeout(() => {
         navigate("/dashboard");
-      }, 2000); // 2 segundos para mostrar el mensaje
+      }, 2000);
     } else {
       setAlert({
         type: "danger",
@@ -35,22 +35,19 @@ const LoginForm: React.FC = () => {
 
   return (
     <div
-      className="d-flex align-items-center justify-content-center"
+      className="d-flex align-items-center justify-content-center container-fluid"
       style={{
         position: "fixed",
         top: 0,
         left: 0,
         width: "100%",
         height: "100%",
-        overflow: "hidden",
         backgroundColor: "#f8f9fa",
-        margin: "0",
-        padding: "0",
       }}
     >
       {alert && (
         <div
-          className={`alert alert-${alert.type} position-absolute`}
+          className={`alert alert-${alert.type} position-absolute mx-2`}
           style={{
             top: "20px",
             maxWidth: "400px",
@@ -65,7 +62,7 @@ const LoginForm: React.FC = () => {
       )}
 
       <div
-        className="card p-4 shadow-lg"
+        className="card p-4 shadow-lg mx-auto mx-sm-3"
         style={{
           maxWidth: "400px",
           width: "100%",
@@ -117,7 +114,9 @@ const LoginForm: React.FC = () => {
 
           <button
             type="submit"
-            className={`btn w-100 ${isFormValid ? "btn-primary" : "btn-secondary"}`}
+            className={`btn w-100 ${
+              isFormValid ? "btn-primary" : "btn-secondary"
+            }`}
             style={{
               borderRadius: "8px",
               fontWeight: "bold",
