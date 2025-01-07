@@ -1,11 +1,12 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const LoginForm: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [alert, setAlert] = useState<{ type: string; message: string } | null>(
-    null
-  );
+  const [alert, setAlert] = useState<{ type: string; message: string } | null>(null);
+
+  const navigate = useNavigate(); // Hook para redirigir al usuario
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -15,6 +16,11 @@ const LoginForm: React.FC = () => {
         type: "success",
         message: "¡Inicio de sesión exitoso! Redirigiendo...",
       });
+
+      // Redirigir al dashboard después de un breve retraso
+      setTimeout(() => {
+        navigate("/dashboard");
+      }, 2000); // 2 segundos para mostrar el mensaje
     } else {
       setAlert({
         type: "danger",
@@ -31,18 +37,17 @@ const LoginForm: React.FC = () => {
     <div
       className="d-flex align-items-center justify-content-center"
       style={{
-        position: "fixed", // Fija el contenedor en la pantalla
+        position: "fixed",
         top: 0,
         left: 0,
         width: "100%",
         height: "100%",
-        overflow: "hidden", // Previene scroll
-        backgroundColor: "#f8f9fa", // Fondo neutro
+        overflow: "hidden",
+        backgroundColor: "#f8f9fa",
         margin: "0",
         padding: "0",
       }}
     >
-      {/* Alerta */}
       {alert && (
         <div
           className={`alert alert-${alert.type} position-absolute`}
@@ -59,14 +64,13 @@ const LoginForm: React.FC = () => {
         </div>
       )}
 
-      {/* Formulario */}
       <div
         className="card p-4 shadow-lg"
         style={{
           maxWidth: "400px",
           width: "100%",
           borderRadius: "16px",
-          backgroundColor: "#ffffff", // Fondo blanco puro
+          backgroundColor: "#ffffff",
           boxShadow: "0 8px 20px rgba(0, 0, 0, 0.1)",
         }}
       >
@@ -77,11 +81,8 @@ const LoginForm: React.FC = () => {
           <i className="fas fa-user-circle text-primary"></i> Iniciar Sesión
         </h3>
         <form onSubmit={handleLogin}>
-        <div className="mb-4">
-            <label className="form-label">
-              <i className="fas fa-envelope me-2 text-secondary"></i> Correo
-              Electrónico
-            </label>
+          <div className="mb-4">
+            <label className="form-label">Correo Electrónico</label>
             <div className="input-group">
               <span className="input-group-text bg-light">
                 <i className="fas fa-envelope"></i>
@@ -97,11 +98,8 @@ const LoginForm: React.FC = () => {
             </div>
           </div>
 
-          {/* Campo de Contraseña */}
           <div className="mb-4">
-            <label className="form-label">
-              <i className="fas fa-lock me-2 text-secondary"></i> Contraseña
-            </label>
+            <label className="form-label">Contraseña</label>
             <div className="input-group">
               <span className="input-group-text bg-light">
                 <i className="fas fa-lock"></i>
@@ -117,26 +115,19 @@ const LoginForm: React.FC = () => {
             </div>
           </div>
 
-          {/* Botón de Iniciar Sesión */}
           <button
             type="submit"
-            className={`btn w-100 ${
-              isFormValid ? "btn-primary" : "btn-secondary"
-            }`}
+            className={`btn w-100 ${isFormValid ? "btn-primary" : "btn-secondary"}`}
             style={{
               borderRadius: "8px",
               fontWeight: "bold",
               cursor: isFormValid ? "pointer" : "not-allowed",
-              ...(isFormValid
-                ? {}
-                : { cursor: "url('data:image/svg+xml,<svg xmlns=\\'http://www.w3.org/2000/svg\\' viewBox=\\'0 0 64 64\\'><circle cx=\\'32\\' cy=\\'32\\' r=\\'30\\' fill=\\'red\\'/></svg>') 16 16, auto" }),
             }}
             disabled={!isFormValid}
           >
             <i className="fas fa-sign-in-alt me-2"></i> Iniciar Sesión
           </button>
 
-          {/* Enlace de Olvidar Contraseña */}
           <div className="text-center mt-3">
             <a
               href="/forgot-password"

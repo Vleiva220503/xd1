@@ -10,6 +10,7 @@ const useAuth = () => {
     email: "admin@example.com",
     password: "admin123",
     role: "admin",
+    active: true,
   };
 
   const login = (email: string, password: string) => {
