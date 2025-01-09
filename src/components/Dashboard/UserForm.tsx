@@ -38,11 +38,12 @@ const UserForm: React.FC<UserFormProps> = ({ user, onSubmit, onCancel }) => {
     );
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
 
-    // Validación básica en tiempo real
     switch (name) {
       case "name":
         setErrors((prev) => ({
@@ -75,11 +76,10 @@ const UserForm: React.FC<UserFormProps> = ({ user, onSubmit, onCancel }) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="p-4 mx-auto"
+      className="p-4 mx-auto modal-content"
       style={{
-        maxWidth: "450px", // Más ancho para mejor estética
+        maxWidth: "450px",
         borderRadius: "10px",
-        border: "1px solid #dee2e6",
       }}
     >
       <h5 className="text-center mb-4 text-primary">
@@ -125,9 +125,7 @@ const UserForm: React.FC<UserFormProps> = ({ user, onSubmit, onCancel }) => {
           placeholder="Mínimo 6 caracteres"
           required
         />
-        {errors.password && (
-          <div className="invalid-feedback">{errors.password}</div>
-        )}
+        {errors.password && <div className="invalid-feedback">{errors.password}</div>}
       </div>
 
       <div className="mb-3">
@@ -150,32 +148,23 @@ const UserForm: React.FC<UserFormProps> = ({ user, onSubmit, onCancel }) => {
           type="checkbox"
           name="active"
           checked={formData.active}
-          onChange={(e) =>
-            setFormData({ ...formData, active: e.target.checked })
-          }
+          onChange={(e) => setFormData({ ...formData, active: e.target.checked })}
           className="form-check-input"
         />
         <label className="form-check-label">Activo</label>
       </div>
 
       <div className="d-flex justify-content-between">
-        {/* Botón de Cancelar */}
-        <button
-          type="button"
-          className="btn btn-outline-danger"
-          onClick={onCancel}
-        >
+        <button type="button" className="btn btn-outline-danger" onClick={onCancel}>
           <i className="bi bi-x-circle"></i> Cancelar
         </button>
 
-        {/* Botón Crear/Actualizar */}
         <button
           type="submit"
           className="btn btn-primary"
           style={{
             backgroundColor: !validateForm() ? "#c6c6c6" : "#007bff",
             cursor: !validateForm() ? "not-allowed" : "pointer",
-            borderColor: !validateForm() ? "#c6c6c6" : "#007bff",
           }}
           disabled={!validateForm()}
         >

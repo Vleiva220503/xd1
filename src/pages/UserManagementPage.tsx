@@ -32,6 +32,7 @@ const UserManagementPage: React.FC = () => {
   const handleEditClick = (user: User) => {
     setEditingUser(user);
     setFormVisible(true);
+    setSidebarOpen(false); // Cierra el sidebar cuando se edita
   };
 
   const handleCancel = () => {
@@ -70,24 +71,44 @@ const UserManagementPage: React.FC = () => {
                 zIndex: 1100,
               }}
             >
-              <i className="fas fa-bars"></i> {/* Icono de menú (FontAwesome) */}
+              <i className="fas fa-bars"></i>
             </button>
           )}
-          <button className="btn btn-success" onClick={() => setFormVisible(true)}>
+          <button
+            className="btn btn-success"
+            onClick={() => {
+              setFormVisible(true);
+              setSidebarOpen(false); // Cierra el sidebar cuando se crea un usuario
+            }}
+          >
             Crear Usuario
           </button>
         </div>
 
         <div className="container mt-4">
-          {isFormVisible && (
-            <UserForm
-              user={editingUser || undefined}
-              onSubmit={handleFormSubmit}
-              onCancel={handleCancel}
-            />
-          )}
           <UserTable users={users} onEdit={handleEditClick} onDelete={handleDeleteUser} />
         </div>
+
+        {/* Modal */}
+        {isFormVisible && (
+          <div className="modal show d-block" tabIndex={-1} style={{ background: "rgba(0,0,0,0.5)" }}>
+            <div className="modal-dialog modal-lg">
+              <div className="modal-content">
+                <div className="modal-header">
+                  
+                  <button type="button" className="btn-close" onClick={handleCancel}></button>
+                </div>
+                <div className="modal-body">
+                  <UserForm
+                    user={editingUser || undefined}
+                    onSubmit={handleFormSubmit}
+                    onCancel={handleCancel}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
